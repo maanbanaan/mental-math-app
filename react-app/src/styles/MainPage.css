@@ -16,6 +16,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 100%;
 }
 
 button {
@@ -48,6 +49,7 @@ button:hover {
     cursor: pointer;
     white-space: nowrap;
     margin: 0.2rem;
+    flex: 0 1 auto; /* allows buttons to shrink if needed */
 }
 
 .type-toggle.active {
@@ -57,3 +59,48 @@ button:hover {
 .score {
     margin: 1rem;
 }
+
+.toggle-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;  /* This prevents buttons from stretching */
+    gap: 0.5rem;
+    padding: 1rem;
+    width: 100%;
+    max-width: 800px;
+}
+
+.question-section {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.settings-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.2s, transform 0.5s ease-out;
+    padding: 0.5rem;
+    margin: 0;
+    height: fit-content;
+    align-self: center;
+    transform: rotate(0deg);
+}
+
+.settings-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(120deg);
+}
+
+.settings-button img {
+    display: block;
+    height: 36px;
+    width: 36px;
+}
+

@@ -8,7 +8,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ }) => {
     return (
         <div className="header">
-            <span></span>
+            <code>quick-math.net</code>
         </div>
     );
 };

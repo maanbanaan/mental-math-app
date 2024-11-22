@@ -1,23 +1,23 @@
 import React from "react";
 import "../styles/QuestionContainer.css";
+import ProgressBar from "./ProgressBar";
 
 interface QuestionContainerProps {
     question: any;
     userAnswer: string;
     isWrong: boolean;
     isCorrect: boolean;
+    timedMode: boolean;
     inputRef: React.RefObject<HTMLInputElement>;
     handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleSkip: (e: React.MouseEvent | KeyboardEvent) => void;
     handleSubmit: (e: React.FormEvent) => void;
 }
 
-const Header: React.FC<QuestionContainerProps> = ({ question, userAnswer, isWrong, isCorrect, inputRef, handleInputChange, handleSkip, handleSubmit }) => {
+const Header: React.FC<QuestionContainerProps> = ({ question, userAnswer, isWrong, isCorrect, timedMode, inputRef, handleInputChange, handleSkip, handleSubmit }) => {
     return (
         <div className="question-container">
-            <div className="progress-container">
-                <progress value={0.5} />
-            </div>
+            {timedMode && <ProgressBar remainingTime={0} totalTime={10} />}
             <h2
                 className={`question ${isWrong ? "wrong" : ""} ${
                     isCorrect ? "correct" : ""

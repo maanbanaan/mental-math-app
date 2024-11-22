@@ -3,6 +3,7 @@ import { QuestionFactory } from "../utils/generator";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import QuestionContainer from "../components/QuestionContainer";
+import settingsIcon from "../images/settings-white.png";
 import "../styles/MainPage.css";
 
 const MainPage: React.FC = () => {
@@ -15,6 +16,7 @@ const MainPage: React.FC = () => {
     );
     const [score, setScore] = useState<number>(0);
     const inputRef = React.useRef<HTMLInputElement>(null);
+    const [timedMode, setTimedMode] = useState<boolean>(false);
 
     const toggleQuestionType = (type: string) => {
         setActiveTypes((prev) => {
@@ -31,7 +33,6 @@ const MainPage: React.FC = () => {
         });
     };
 
-    
     const generateNewQuestion = React.useCallback(() => {
         console.log(activeTypes);
         try {
@@ -102,11 +103,25 @@ const MainPage: React.FC = () => {
             <Header />
             <div className="main-content">
                 <div className="title">
-                    <h2>Mental Math Trainer</h2>
+                    <h3></h3>
                 </div>
-                <QuestionContainer question={question} userAnswer={userAnswer} isWrong={isWrong} isCorrect={isCorrect} inputRef={inputRef} handleInputChange={handleInputChange} handleSkip={handleSkip} handleSubmit={handleSubmit} />
-                
+
+                <QuestionContainer
+                    timedMode={timedMode}
+                    question={question}
+                    userAnswer={userAnswer}
+                    isWrong={isWrong}
+                    isCorrect={isCorrect}
+                    inputRef={inputRef}
+                    handleInputChange={handleInputChange}
+                    handleSkip={handleSkip}
+                    handleSubmit={handleSubmit}
+                />
+
                 <div className="toggle-buttons">
+                    <button className="settings-button">
+                        <img src={settingsIcon} alt="Settings" />
+                    </button>
                     {Object.keys(QuestionFactory.questionTypes).map((type) => (
                         <button
                             key={type}

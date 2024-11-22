@@ -1,0 +1,26 @@
+.progress-container {
+    height: 20px;
+    width: '100%';
+    border-radius: inherit;
+    margin: 50;
+    padding: 3px;
+}
+
+.progress-filler {
+    height: 100%;
+    background-color: #405085;
+    border-radius: inherit;
+    text-align: right;
+    font-size: 1rem;
+    padding-right: 5px;
+    box-sizing: border-box;
+    margin: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.progress-label {
+    padding: 5;
+    color: white;
+}
