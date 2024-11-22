@@ -11,6 +11,7 @@ const MainPage: React.FC = () => {
         new Set(["integer", "decimal", "fraction", "multiplication"])
     );
     const [score, setScore] = useState<number>(0);
+    const inputRef = React.useRef<HTMLInputElement>(null);
 
     const toggleQuestionType = (type: string) => {
         setActiveTypes((prev) => {
@@ -27,7 +28,9 @@ const MainPage: React.FC = () => {
         });
     };
 
-    const generateNewQuestion = () => {
+    // Make generateNewQuestion depend on activeTypes
+    const generateNewQuestion = React.useCallback(() => {
+        console.log(activeTypes)
         try {
             const newQuestion = QuestionFactory.createRandomQuestion(
                 "medium",
@@ -35,10 +38,11 @@ const MainPage: React.FC = () => {
             );
             setQuestion(newQuestion);
             setUserAnswer("");
+            inputRef.current?.focus();
         } catch (error) {
             console.error("Error generating question:", error);
         }
-    };
+    }, [activeTypes]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -56,6 +60,7 @@ const MainPage: React.FC = () => {
             setIsWrong(true);
             setTimeout(() => setIsWrong(false), 150);
             setUserAnswer("");
+            inputRef.current?.focus();
         }
     };
 
@@ -68,6 +73,7 @@ const MainPage: React.FC = () => {
         generateNewQuestion();
     }, []);
 
+    // Update useEffect to include the dependency
     useEffect(() => {
         const handleKeyPress = (e: KeyboardEvent) => {
             if (e.code === "Space") {
@@ -80,7 +86,7 @@ const MainPage: React.FC = () => {
         return () => {
             window.removeEventListener("keydown", handleKeyPress);
         };
-    }, []);
+    }, [generateNewQuestion]);
 
     if (!question) return <div>Loading...</div>;
 
@@ -99,6 +105,7 @@ const MainPage: React.FC = () => {
                 </h2>
                 <form onSubmit={handleSubmit}>
                     <input
+                        ref={inputRef}
                         autoFocus
                         type="number"
                         step="0.001"
