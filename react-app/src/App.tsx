@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import MainPage from './pages/MainPage';
+import { SettingsProvider } from './context/SettingsContext';
 
 interface AppProps {
   // Add props if needed
@@ -9,7 +10,9 @@ interface AppProps {
 const App: React.FC<AppProps> = () => {
   return (
     <div className="App">
-      <MainPage />
+      <SettingsProvider>
+        <MainPage />
+      </SettingsProvider>
     </div>
   );
 };

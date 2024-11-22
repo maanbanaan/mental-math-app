@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { SettingsContext } from "../context/SettingsContext";
 import { QuestionFactory } from "../utils/generator";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import QuestionContainer from "../components/QuestionContainer";
 import settingsIcon from "../images/settings-white.png";
+import SettingsModal from "../components/SettingsModal";
 import "../styles/MainPage.css";
 
 const MainPage: React.FC = () => {
+    const { settings } = useContext(SettingsContext);
+    const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
     const [question, setQuestion] = useState<any>(null);
     const [userAnswer, setUserAnswer] = useState<string>("");
     const [isWrong, setIsWrong] = useState<boolean>(false);
@@ -16,7 +20,6 @@ const MainPage: React.FC = () => {
     );
     const [score, setScore] = useState<number>(0);
     const inputRef = React.useRef<HTMLInputElement>(null);
-    const [timedMode, setTimedMode] = useState<boolean>(false);
 
     const toggleQuestionType = (type: string) => {
         setActiveTypes((prev) => {
@@ -99,7 +102,7 @@ const MainPage: React.FC = () => {
     if (!question) return <div>Loading...</div>;
 
     return (
-        <div className="main-page">
+        <div className="main-page" style={{ position: 'relative' }}>
             <Header />
             <div className="main-content">
                 <div className="title">
@@ -107,7 +110,9 @@ const MainPage: React.FC = () => {
                 </div>
 
                 <QuestionContainer
-                    timedMode={timedMode}
+                    timedMode={settings.gameMode === "timed"}
+                    answerMode={settings.answerMode}
+                    timeLimit={settings.timeLimit}
                     question={question}
                     userAnswer={userAnswer}
                     isWrong={isWrong}
@@ -119,7 +124,7 @@ const MainPage: React.FC = () => {
                 />
 
                 <div className="toggle-buttons">
-                    <button className="settings-button">
+                    <button className="settings-button" onClick={() => setIsSettingsOpen(true)}>
                         <img src={settingsIcon} alt="Settings" />
                     </button>
                     {Object.keys(QuestionFactory.questionTypes).map((type) => (
@@ -136,8 +141,8 @@ const MainPage: React.FC = () => {
                 </div>
                 <div className="score">Score: {score}</div>
             </div>
-
             <Footer />
+            <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
         </div>
     );
 };
