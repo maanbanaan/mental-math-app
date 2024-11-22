@@ -7,11 +7,21 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
     width: 90%;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .question {
     transition: color 1s ease-out;
     color: white;
+    margin: 0;
+    line-height: 2;
+    min-height: 4em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .question.wrong {
@@ -41,9 +51,7 @@ input {
     color: white;
     height: auto;
     max-width: 100%;
-
 }
-
 
 input:focus {
     outline: none;
@@ -54,8 +62,6 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
-
 
 button {
     padding: 0.5rem 1rem;
