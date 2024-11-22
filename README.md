@@ -14,4 +14,4 @@ Some features I would like to add include:
 Feel free to send any feedback about the app to manuel.jostijn@gmail.com. If you have completed assessments for trading/quant roles, I would love to hear from you!
 
 ### Why did I make this?
-I got frustrated by the lack of free mental math practice tools that are catered towards those preparing for trader assessments, so I decided to make my own.
+I got frustrated by the lack of free mental math practice designed to help prepare for trader assessments, so I decided to make my own.
