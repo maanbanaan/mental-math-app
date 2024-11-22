@@ -2,7 +2,7 @@
 A simple and interactive web application to help users improve their mental math skills. The app is designed to mimic the difficulty and question styles of numerical assessments at trading firms. Try to be as fast as you can!
 
 ### Live demo: 
-You can try the app here: [Mental Math](https://maanbanaan.github.io/mental-math-app/)
+You can try the app here: [Quick Math](https://maanbanaan.github.io/mental-math-app/)
 
 ### Upcoming features
 Some features I would like to add include:
