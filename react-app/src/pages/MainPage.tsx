@@ -1,21 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import { QuestionFactory } from '../utils/generator';
-import { Fraction } from 'fractional';
+import React, { useState, useEffect } from "react";
+import { QuestionFactory } from "../utils/generator";
+import "../styles/MainPage.css";
 
 const MainPage: React.FC = () => {
     const [question, setQuestion] = useState<any>(null);
-    const [userAnswer, setUserAnswer] = useState<string>('');
-    const [feedback, setFeedback] = useState<string>('');
+    const [userAnswer, setUserAnswer] = useState<string>("");
+    const [isWrong, setIsWrong] = useState<boolean>(false);
+    const [isCorrect, setIsCorrect] = useState<boolean>(false);
+    const [activeTypes, setActiveTypes] = useState<Set<string>>(
+        new Set(["integer", "decimal", "fraction", "multiplication"])
+    );
+    const [score, setScore] = useState<number>(0);
+
+    const toggleQuestionType = (type: string) => {
+        setActiveTypes((prev) => {
+            const newTypes = new Set(prev);
+            if (newTypes.has(type)) {
+                if (newTypes.size > 1) {
+                    // Prevent deactivating all types
+                    newTypes.delete(type);
+                }
+            } else {
+                newTypes.add(type);
+            }
+            return newTypes;
+        });
+    };
 
     const generateNewQuestion = () => {
         try {
-            const newQuestion = QuestionFactory.createQuestion('integer'); // or 'decimal', 'fraction', 'multiplication'
-            console.log('Generated question:', newQuestion); // Add this for debugging
+            const newQuestion = QuestionFactory.createRandomQuestion(
+                "medium",
+                activeTypes
+            );
             setQuestion(newQuestion);
-            setUserAnswer('');
-            setFeedback(' ');
+            setUserAnswer("");
         } catch (error) {
-            console.error('Error generating question:', error);
+            console.error("Error generating question:", error);
         }
     };
 
@@ -25,12 +46,21 @@ const MainPage: React.FC = () => {
 
         const numericAnswer = parseFloat(userAnswer);
         const isCorrect = question.checkAnswer(numericAnswer);
-        setFeedback(isCorrect ? 'Correct!' : 'Try again!');
         if (isCorrect) {
+            setScore((prev) => prev + 1);
             generateNewQuestion();
+            setIsCorrect(true);
+            setTimeout(() => setIsCorrect(false), 150);
         } else {
-            setUserAnswer('');
+            setScore((prev) => Math.max(0, prev - 1));
+            setIsWrong(true);
+            setTimeout(() => setIsWrong(false), 150);
+            setUserAnswer("");
         }
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setUserAnswer(e.target.value);
     };
 
     // Generate first question when component mounts
@@ -38,26 +68,67 @@ const MainPage: React.FC = () => {
         generateNewQuestion();
     }, []);
 
+    useEffect(() => {
+        const handleKeyPress = (e: KeyboardEvent) => {
+            if (e.code === "Space") {
+                e.preventDefault(); // Prevent space from scrolling page
+                generateNewQuestion();
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyPress);
+        return () => {
+            window.removeEventListener("keydown", handleKeyPress);
+        };
+    }, []);
+
     if (!question) return <div>Loading...</div>;
 
     return (
         <div className="main-page">
-            <h1>Mental Math Practice</h1>
+            <div className="header">
+                <h2>Mental Math Trainer</h2>
+            </div>
             <div className="question-container">
-                <h2>{question.toString()}</h2>
+                <h2
+                    className={`question ${isWrong ? "wrong" : ""} ${
+                        isCorrect ? "correct" : ""
+                    }`}
+                >
+                    {question.toJSX()}
+                </h2>
                 <form onSubmit={handleSubmit}>
                     <input
+                        autoFocus
                         type="number"
-                        step="any"
+                        step="0.001"
+                        inputMode="decimal"
                         value={userAnswer}
-                        onChange={(e) => setUserAnswer(e.target.value)}
-                        placeholder="Enter your answer"
+                        onChange={handleInputChange}
+                        placeholder="Answer"
                     />
-                    <button type="submit">Check Answer</button>
+                    <div className="action-buttons">
+                        <button type="submit">Submit (enter)</button>
+                        <button onClick={generateNewQuestion}>
+                            Skip (space)
+                        </button>
+                    </div>
                 </form>
-                <button onClick={generateNewQuestion}>New Question</button>
-                {feedback && <p className={feedback === 'Correct!' ? 'correct' : 'incorrect'}>{feedback}</p>}
             </div>
+            <div className="footer">
+                {Object.keys(QuestionFactory.questionTypes).map((type) => (
+                    <button
+                        key={type}
+                        className={`type-toggle ${
+                            activeTypes.has(type) ? "active" : ""
+                        }`}
+                        onClick={() => toggleQuestionType(type)}
+                    >
+                        {type.charAt(0).toUpperCase() + type.slice(1)}
+                    </button>
+                ))}
+            </div>
+            <div className="score">Score: {score}</div>
         </div>
     );
 };
