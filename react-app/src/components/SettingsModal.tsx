@@ -22,7 +22,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
                 <h2>Settings</h2>
 
                 <div className="setting-group">
-                    <label>Difficulty</label>
+                    <label>Difficulty (not functional yet)</label>
                     <select
                         value={settings.difficulty}
                         onChange={(e) =>
@@ -39,7 +39,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
                 </div>
 
                 <div className="setting-group">
-                    <label>Answer Mode</label>
+                    <label>Answer Mode (not functional yet)</label>
                     <select
                         value={settings.answerMode}
                         onChange={(e) =>
