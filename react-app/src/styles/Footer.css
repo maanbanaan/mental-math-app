@@ -1,3 +1,5 @@
+@import 'colors.css';
+
 .footer {
     display: flex;
     align-items: center;
@@ -5,4 +7,10 @@
     width: 100%;
     padding: 1rem 1.5rem;
     box-sizing: border-box;
+    font-size: 0.8em;
+}
+
+.footer a {
+    margin-right: 1rem;
+    color: #a6c0f8;
 }

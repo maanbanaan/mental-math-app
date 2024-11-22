@@ -34,4 +34,5 @@
     --text-primary: var(--neutral-900);
     --text-secondary: var(--neutral-600);
     --text-disabled: var(--neutral-400);
+    --text-link: #a6c0f8;
 }
