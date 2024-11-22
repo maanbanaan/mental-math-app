@@ -8,7 +8,7 @@ interface FooterProps {
 const Footer: React.FC<FooterProps> = ({ }) => {
     return (
         <div className="footer">
-            <a href="https://github.com">GitHub</a>
+            <a href="https://github.com/maanbanaan/mental-math-app">GitHub</a>
         </div>
     );
 };
