@@ -8,7 +8,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ }) => {
     return (
         <div className="header">
-            <span>Settings</span>
+            <span></span>
         </div>
     );
 };
