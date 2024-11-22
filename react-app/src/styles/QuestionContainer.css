@@ -32,12 +32,12 @@
 
 .question.wrong {
     transition: color 0s;
-    color: var(--error);  /* or rgb(227, 135, 135) if you prefer the direct color */
+    color: var(--error); 
 }
 
 .question.correct {
     transition: color 0s;
-    color: var(--success);  /* or whatever color you want */
+    color: var(--success);
 }
 
 form {
