@@ -161,6 +161,15 @@ class IntegerAddition extends MathQuestion {
         this.operand1 = randomInt(1, this.rangeMax);
         this.operand2 = randomInt(1, this.rangeMax);
         this.operator = Math.random() > 0.5 ? Operator.ADD : Operator.SUBTRACT;
+        if (
+            this.operator === Operator.SUBTRACT &&
+            Math.random() > this.negativeAnswerProb
+        ) {
+            [this.operand1, this.operand2] = [
+                Math.max(this.operand1, this.operand2),
+                Math.min(this.operand1, this.operand2),
+            ];
+        }
         this.answer = operatorFunctions[this.operator](
             this.operand1,
             this.operand2

@@ -1,3 +1,23 @@
+@import './colors.css';
+
+.main-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .question-container {
     background: rgba(255, 255, 255, 0.1);
     max-width: 600px;
@@ -26,12 +46,12 @@
 
 .question.wrong {
     transition: color 0s;
-    color: rgb(227, 135, 135);
+    color: var(--error);  /* or rgb(227, 135, 135) if you prefer the direct color */
 }
 
 .question.correct {
     transition: color 0s;
-    color: rgb(99, 168, 99);
+    color: var(--success);  /* or whatever color you want */
 }
 
 form {
@@ -74,14 +94,6 @@ button {
 
 button:hover {
     background: #cae2fc;
-}
-
-.correct {
-    color: green;
-}
-
-.incorrect {
-    color: red;
 }
 
 .question-types {
