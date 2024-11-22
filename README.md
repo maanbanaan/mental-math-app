@@ -1,4 +1,4 @@
-# Mental Math App
+# quick-math: A mental math practice tool for aspiring traders
 A simple and interactive web application to help users improve their mental math skills. The app is designed to mimic the difficulty and question styles of numerical assessments at trading firms. Try to be as fast as you can!
 
 ### Live demo: 
