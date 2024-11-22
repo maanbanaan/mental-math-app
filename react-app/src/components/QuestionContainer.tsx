@@ -11,42 +11,64 @@ interface QuestionContainerProps {
     timedMode: boolean;
     timeLimit: number;
     inputRef: React.RefObject<HTMLInputElement>;
+    gameState: 'pre' | 'active' | 'post';
+    startGame: () => void;
+    timeRemaining: number;
+    score: number;
     handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleSkip: (e: React.MouseEvent | KeyboardEvent) => void;
     handleSubmit: (e: React.FormEvent) => void;
 }
 
-const Header: React.FC<QuestionContainerProps> = ({ question, userAnswer, isWrong, isCorrect, timedMode, timeLimit, inputRef, handleInputChange, handleSkip, handleSubmit }) => {
+const QuestionContainer: React.FC<QuestionContainerProps> = ({ 
+    question, userAnswer, isWrong, isCorrect, timedMode, 
+    timeRemaining, gameState, startGame, score, ...props 
+}) => {
     return (
         <div className="question-container">
-            {timedMode && <ProgressBar remainingTime={timeLimit} totalTime={timeLimit} />}
-            <h2
-                className={`question ${isWrong ? "wrong" : ""} ${
-                    isCorrect ? "correct" : ""
-                }`}
-            >
-                {question.toJSX()}
-            </h2>
-            <form onSubmit={handleSubmit}>
-                <input
-                    ref={inputRef}
-                    autoFocus
-                    type="number"
-                    step="0.001"
-                    inputMode="decimal"
-                    value={userAnswer}
-                    onChange={handleInputChange}
-                    placeholder="Answer"
-                />
-                <div className="action-buttons">
-                    <button type="submit">Submit (enter)</button>
-                    <button type="button" onClick={handleSkip}>
-                        Skip (space)
-                    </button>
+            {timedMode && <ProgressBar remainingTime={timeRemaining} totalTime={props.timeLimit} />}
+            
+            {timedMode && gameState === 'pre' && (
+                <div className="game-controls">
+                    <button onClick={startGame}>Start Game</button>
                 </div>
-            </form>
+            )}
+
+            {(!timedMode || gameState === 'active') && (
+                <>
+                    <h2 className={`question ${isWrong ? "wrong" : ""} ${isCorrect ? "correct" : ""}`}>
+                        {question.toJSX()}
+                    </h2>
+                    <form onSubmit={props.handleSubmit}>
+                        <input
+                            ref={props.inputRef}
+                            autoFocus
+                            type="number"
+                            step="0.001"
+                            inputMode="decimal"
+                            value={userAnswer}
+                            onChange={props.handleInputChange}
+                            placeholder="Answer"
+                        />
+                        <div className="action-buttons">
+                            <button type="submit">Submit (enter)</button>
+                            <button type="button" onClick={props.handleSkip}>
+                                Skip (space)
+                            </button>
+                        </div>
+                    </form>
+                </>
+            )}
+
+            {timedMode && gameState === 'post' && (
+                <div className="game-over">
+                    <h2>Time's Up!</h2>
+                    <p>Final Score: {score}</p>
+                    <button onClick={startGame}>Play Again</button>
+                </div>
+            )}
         </div>
     );
 };
 
-export default Header;
+export default QuestionContainer;

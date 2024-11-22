@@ -4,6 +4,7 @@ import { QuestionFactory } from "../utils/generator";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import QuestionContainer from "../components/QuestionContainer";
+import GameManager from "../components/GameManager";
 import settingsIcon from "../images/settings-white.png";
 import SettingsModal from "../components/SettingsModal";
 import "../styles/MainPage.css";
@@ -20,6 +21,7 @@ const MainPage: React.FC = () => {
     );
     const [score, setScore] = useState<number>(0);
     const inputRef = React.useRef<HTMLInputElement>(null);
+    const [gameActive, setGameActive] = useState<boolean>(false);
 
     const toggleQuestionType = (type: string) => {
         setActiveTypes((prev) => {
@@ -71,6 +73,10 @@ const MainPage: React.FC = () => {
         }
     };
 
+    const resetScore = () => {
+        setScore(0);
+    };
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUserAnswer(e.target.value);
     };
@@ -85,7 +91,6 @@ const MainPage: React.FC = () => {
         generateNewQuestion();
     }, []);
 
-    // Update useEffect to include the dependency
     useEffect(() => {
         const handleKeyPress = (e: KeyboardEvent) => {
             if (e.code === "Space") {
@@ -109,10 +114,8 @@ const MainPage: React.FC = () => {
                     <h3></h3>
                 </div>
 
-                <QuestionContainer
-                    timedMode={settings.gameMode === "timed"}
-                    answerMode={settings.answerMode}
-                    timeLimit={settings.timeLimit}
+                <GameManager
+                    settings={settings}
                     question={question}
                     userAnswer={userAnswer}
                     isWrong={isWrong}
@@ -121,6 +124,8 @@ const MainPage: React.FC = () => {
                     handleInputChange={handleInputChange}
                     handleSkip={handleSkip}
                     handleSubmit={handleSubmit}
+                    score={score}
+                    resetScore={resetScore}
                 />
 
                 <div className="toggle-buttons">
@@ -139,7 +144,9 @@ const MainPage: React.FC = () => {
                         </button>
                     ))}
                 </div>
-                <div className="score">Score: {score}</div>
+                <div className="score">
+                    {settings.gameMode === "timed" && <div>Score: {score}</div>}
+                </div>
             </div>
             <Footer />
             <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />

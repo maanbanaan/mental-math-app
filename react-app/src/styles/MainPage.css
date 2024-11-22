@@ -58,6 +58,7 @@ button:hover {
 
 .score {
     margin: 1rem;
+    height: 1em;
 }
 
 .toggle-buttons {
