@@ -1,0 +1,121 @@
+# PYTHON
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Django specific files
+db.sqlite3
+media/
+
+# Virtual environment
+env_311/
+my_env/
+.venv/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter notebooks
+*.ipynb
+
+# IDE/editor specific files
+.idea/
+.vscode/
+
+# Build, distribution, and packaging
+*.egg-info/
+*.whl
+*.egg
+*.manifest
+*.spec
+dist/
+build/
+downloads/
+eggs/
+.lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.whl
+
+# Logs and temporary files
+*.log
+*.bak
+*.tmp
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Coverage and test reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# pyenv
+.python-version
+
+# celery
+celerybeat-schedule.*
+
+# SageMath parsed files
+*.sage.py
+
+# Miscellaneous
+.sublime-workspace
+.sublime-project
+*.iws
+*.sublime-workspace
+*.sublime-project
+
+
+
+# REACT
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+./node_modules
+**/node_modules/
+/react-app/node_modules
+./react-app/node_modules
+.react-app/node_modules
+/.pnp
+.pnp.js
+
+**/build/
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env
+.env.development
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+yarn.lock
+.yarn.lock

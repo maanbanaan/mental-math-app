@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/mental-math-app/static/css/main.a90acfde.css",
+    "main.js": "/mental-math-app/static/js/main.9379d4d2.js",
+    "index.html": "/mental-math-app/index.html",
+    "main.a90acfde.css.map": "/mental-math-app/static/css/main.a90acfde.css.map",
+    "main.9379d4d2.js.map": "/mental-math-app/static/js/main.9379d4d2.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a90acfde.css",
+    "static/js/main.9379d4d2.js"
+  ]
+}
