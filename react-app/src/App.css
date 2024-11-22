@@ -7,8 +7,7 @@ body {
 .App {
   text-align: center;
   background-color: #1d232e;
-  min-height: 100vh;
-  height: 100vh;
+  height: 100dvh;
   width: 100vw;
   display: flex;
   flex-direction: column;
