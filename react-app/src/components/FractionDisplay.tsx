@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Fraction } from 'fractional';
 import '../styles/FractionDisplay.css';

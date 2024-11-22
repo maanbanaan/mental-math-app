@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { QuestionFactory } from "../utils/generator";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import "../styles/MainPage.css";
 
 const MainPage: React.FC = () => {
@@ -30,7 +32,7 @@ const MainPage: React.FC = () => {
 
     // Make generateNewQuestion depend on activeTypes
     const generateNewQuestion = React.useCallback(() => {
-        console.log(activeTypes)
+        console.log(activeTypes);
         try {
             const newQuestion = QuestionFactory.createRandomQuestion(
                 "medium",
@@ -92,50 +94,55 @@ const MainPage: React.FC = () => {
 
     return (
         <div className="main-page">
-            <div className="header">
-                <h2>Mental Math Trainer</h2>
-            </div>
-            <div className="question-container">
-                <h2
-                    className={`question ${isWrong ? "wrong" : ""} ${
-                        isCorrect ? "correct" : ""
-                    }`}
-                >
-                    {question.toJSX()}
-                </h2>
-                <form onSubmit={handleSubmit}>
-                    <input
-                        ref={inputRef}
-                        autoFocus
-                        type="number"
-                        step="0.001"
-                        inputMode="decimal"
-                        value={userAnswer}
-                        onChange={handleInputChange}
-                        placeholder="Answer"
-                    />
-                    <div className="action-buttons">
-                        <button type="submit">Submit (enter)</button>
-                        <button onClick={generateNewQuestion}>
-                            Skip (space)
-                        </button>
-                    </div>
-                </form>
-            </div>
-            <div className="footer">
-                {Object.keys(QuestionFactory.questionTypes).map((type) => (
-                    <button
-                        key={type}
-                        className={`type-toggle ${
-                            activeTypes.has(type) ? "active" : ""
+            <Header />
+            <div className="main-content">
+                <div className="title">
+                    <h2>Mental Math Trainer</h2>
+                </div>
+                <div className="question-container">
+                    <h2
+                        className={`question ${isWrong ? "wrong" : ""} ${
+                            isCorrect ? "correct" : ""
                         }`}
-                        onClick={() => toggleQuestionType(type)}
                     >
-                        {type.charAt(0).toUpperCase() + type.slice(1)}
-                    </button>
-                ))}
+                        {question.toJSX()}
+                    </h2>
+                    <form onSubmit={handleSubmit}>
+                        <input
+                            ref={inputRef}
+                            autoFocus
+                            type="number"
+                            step="0.001"
+                            inputMode="decimal"
+                            value={userAnswer}
+                            onChange={handleInputChange}
+                            placeholder="Answer"
+                        />
+                        <div className="action-buttons">
+                            <button type="submit">Submit (enter)</button>
+                            <button onClick={generateNewQuestion}>
+                                Skip (space)
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div className="toggle-buttons">
+                    {Object.keys(QuestionFactory.questionTypes).map((type) => (
+                        <button
+                            key={type}
+                            className={`type-toggle ${
+                                activeTypes.has(type) ? "active" : ""
+                            }`}
+                            onClick={() => toggleQuestionType(type)}
+                        >
+                            {type.charAt(0).toUpperCase() + type.slice(1)}
+                        </button>
+                    ))}
+                </div>
+                <div className="score">Score: {score}</div>
             </div>
-            <div className="score">Score: {score}</div>
+
+            <Footer />
         </div>
     );
 };
