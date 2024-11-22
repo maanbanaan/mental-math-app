@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { QuestionFactory } from "../utils/generator";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import QuestionContainer from "../components/QuestionContainer";
 import "../styles/MainPage.css";
 
 const MainPage: React.FC = () => {
@@ -30,7 +31,7 @@ const MainPage: React.FC = () => {
         });
     };
 
-    // Make generateNewQuestion depend on activeTypes
+    
     const generateNewQuestion = React.useCallback(() => {
         console.log(activeTypes);
         try {
@@ -70,6 +71,11 @@ const MainPage: React.FC = () => {
         setUserAnswer(e.target.value);
     };
 
+    const handleSkip = (e: React.MouseEvent | KeyboardEvent) => {
+        e.preventDefault();
+        generateNewQuestion();
+    };
+
     // Generate first question when component mounts
     useEffect(() => {
         generateNewQuestion();
@@ -79,8 +85,7 @@ const MainPage: React.FC = () => {
     useEffect(() => {
         const handleKeyPress = (e: KeyboardEvent) => {
             if (e.code === "Space") {
-                e.preventDefault(); // Prevent space from scrolling page
-                generateNewQuestion();
+                handleSkip(e);
             }
         };
 
@@ -99,33 +104,8 @@ const MainPage: React.FC = () => {
                 <div className="title">
                     <h2>Mental Math Trainer</h2>
                 </div>
-                <div className="question-container">
-                    <h2
-                        className={`question ${isWrong ? "wrong" : ""} ${
-                            isCorrect ? "correct" : ""
-                        }`}
-                    >
-                        {question.toJSX()}
-                    </h2>
-                    <form onSubmit={handleSubmit}>
-                        <input
-                            ref={inputRef}
-                            autoFocus
-                            type="number"
-                            step="0.001"
-                            inputMode="decimal"
-                            value={userAnswer}
-                            onChange={handleInputChange}
-                            placeholder="Answer"
-                        />
-                        <div className="action-buttons">
-                            <button type="submit">Submit (enter)</button>
-                            <button onClick={generateNewQuestion}>
-                                Skip (space)
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                <QuestionContainer question={question} userAnswer={userAnswer} isWrong={isWrong} isCorrect={isCorrect} inputRef={inputRef} handleInputChange={handleInputChange} handleSkip={handleSkip} handleSubmit={handleSubmit} />
+                
                 <div className="toggle-buttons">
                     {Object.keys(QuestionFactory.questionTypes).map((type) => (
                         <button
