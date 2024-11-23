@@ -21,7 +21,6 @@ const MainPage: React.FC = () => {
     );
     const [score, setScore] = useState<number>(0);
     const inputRef = React.useRef<HTMLInputElement>(null);
-    const [gameActive, setGameActive] = useState<boolean>(false);
 
     const toggleQuestionType = (type: string) => {
         setActiveTypes((prev) => {
@@ -39,15 +38,15 @@ const MainPage: React.FC = () => {
     };
 
     const generateNewQuestion = React.useCallback(() => {
-        console.log(activeTypes);
         try {
             const newQuestion = QuestionFactory.createRandomQuestion(
-                "medium",
+                settings.difficulty,
                 activeTypes
             );
             setQuestion(newQuestion);
             setUserAnswer("");
             inputRef.current?.focus();
+            console.log(newQuestion.answer)
         } catch (error) {
             console.error("Error generating question:", error);
         }
