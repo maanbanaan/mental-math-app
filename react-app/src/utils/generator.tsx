@@ -250,8 +250,8 @@ class FractionAddition extends MathQuestion {
         const num1 = randomInt(1, den1);
         const num2 = randomInt(1, den2);
 
-        this.operand1 = new Fraction(1, 2);
-        this.operand2 = new Fraction(1, 2);
+        this.operand1 = new Fraction(num1, den1);
+        this.operand2 = new Fraction(num2, den2);
         this.operator = Math.random() > 0.5 ? Operator.ADD : Operator.SUBTRACT;
         this.answer = operatorFunctions[this.operator](
             this.operand1,

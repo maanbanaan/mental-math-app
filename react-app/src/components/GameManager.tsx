@@ -13,11 +13,18 @@ interface GameManagerProps {
     handleSubmit: (e: React.FormEvent) => void;
     score: number;
     resetScore: () => void;
+    generateNewQuestion: () => void;
 }
 
-const GameManager: React.FC<GameManagerProps> = ({ settings, resetScore, ...props }) => {
+const GameManager: React.FC<GameManagerProps> = ({ settings, resetScore, generateNewQuestion, ...props }) => {
     const [gameState, setGameState] = useState<'pre' | 'active' | 'post'>('pre');
     const [timeRemaining, setTimeRemaining] = useState(settings.timeLimit);
+
+    useEffect(() => {
+        if (gameState === 'active' || gameState === 'pre') {
+            generateNewQuestion();
+        }
+    }, [gameState, generateNewQuestion]);
 
     useEffect(() => {
         let timer: NodeJS.Timeout;
