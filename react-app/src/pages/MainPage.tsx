@@ -125,7 +125,6 @@ const MainPage: React.FC = () => {
                     handleSubmit={handleSubmit}
                     score={score}
                     resetScore={resetScore}
-                    generateNewQuestion={generateNewQuestion}
                 />
 
                 <div className="toggle-buttons">
