@@ -2,5 +2,4 @@
 A simple and interactive web application to help users improve their mental math skills. 
 
 ### Website 
-You can try the app here: [quick-math.net](https://maanbanaan.github.io/mental-math-app/)
-
+You can try the app here: [quick-math.net](https://maanbanaan.github.io/mental-math-app/). It is hosted with GitHub Pages.
