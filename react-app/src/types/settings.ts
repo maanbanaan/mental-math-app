@@ -1,6 +1,7 @@
 export interface Settings {
     difficulty: 'easy' | 'medium' | 'hard' | 'insane';
     answerMode: 'input' | 'multiple-choice';
-    gameMode: 'timed' | 'endless';
+    gameMode: 'timed' | 'untimed' | 'endless';
     timeLimit: number; // in seconds
+    requireReducedFractions: boolean;
 }

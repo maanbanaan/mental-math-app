@@ -4,8 +4,9 @@ import { Settings } from '../types/settings';
 export const defaultSettings: Settings = {
     difficulty: 'medium',
     answerMode: 'input',
-    gameMode: 'endless',
-    timeLimit: 60
+    gameMode: 'untimed',
+    timeLimit: 60,
+    requireReducedFractions: false
 };
 
 interface SettingsContextType {

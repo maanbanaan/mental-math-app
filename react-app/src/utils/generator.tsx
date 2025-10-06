@@ -1,6 +1,6 @@
 import { randomInt, randomFloat } from "./randomUtils";
 import { Fraction } from "fractional";
-import { lcm } from "./mathUtils";
+import { lcm, decimalToFraction } from "./mathUtils";
 import React from 'react';
 import FractionDisplay from '../components/FractionDisplay';
 
@@ -17,20 +17,6 @@ interface OperatorFunction {
 
 function isNumber(value: any): value is number {
     return typeof value === "number";
-}
-
-function decimalToFraction(decimal: number): Fraction {
-    const str = decimal.toString();
-    let denominator = 1;
-
-    const decimalIndex = str.indexOf(".");
-    if (decimalIndex !== -1) {
-        denominator = Math.pow(10, str.length - decimalIndex - 1);
-        const numerator = parseInt(str.replace(".", ""));
-        return new Fraction(numerator, denominator);
-    }
-
-    return new Fraction(decimal, 1);
 }
 
 const operatorFunctions: Record<Operator, OperatorFunction> = {

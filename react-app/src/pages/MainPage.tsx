@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { SettingsContext } from "../context/SettingsContext";
 import { QuestionFactory } from "../utils/generator";
+import { parseUserAnswer, isFractionInLowestTerms } from "../utils/mathUtils";
+import { Fraction } from "fractional";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import QuestionContainer from "../components/QuestionContainer";
@@ -20,6 +22,7 @@ const MainPage: React.FC = () => {
         new Set(["integer", "decimal", "fraction", "multiplication"])
     );
     const [score, setScore] = useState<number>(0);
+    const [inputError, setInputError] = useState<string>("");
     const inputRef = React.useRef<HTMLInputElement>(null);
 
     const toggleQuestionType = (type: string) => {
@@ -45,6 +48,7 @@ const MainPage: React.FC = () => {
             );
             setQuestion(newQuestion);
             setUserAnswer("");
+            setInputError("");
             inputRef.current?.focus();
             console.log(newQuestion.answer)
         } catch (error) {
@@ -56,18 +60,52 @@ const MainPage: React.FC = () => {
         e.preventDefault();
         if (!question) return;
 
-        const numericAnswer = parseFloat(userAnswer);
-        const isCorrect = question.checkAnswer(numericAnswer);
+        const parsedAnswer = parseUserAnswer(userAnswer);
+
+        if (!parsedAnswer) {
+            setInputError("Enter a whole number (like 3), decimal (like 0.75), or fraction (like 3/8).");
+            return;
+        }
+
+        if (
+            settings.requireReducedFractions &&
+            parsedAnswer.kind === "fraction" &&
+            parsedAnswer.rawNumerator !== undefined &&
+            parsedAnswer.rawDenominator !== undefined &&
+            question.answer instanceof Fraction &&
+            !isFractionInLowestTerms(parsedAnswer.rawNumerator, parsedAnswer.rawDenominator)
+        ) {
+            setInputError("Please reduce your fraction to lowest terms (e.g., 3/2 instead of 6/4).");
+            return;
+        }
+
+        const attempts: Array<number | Fraction> = [];
+
+        if (parsedAnswer.kind === "fraction") {
+            if (parsedAnswer.fraction) {
+                attempts.push(parsedAnswer.fraction);
+            }
+            if (typeof parsedAnswer.numeric === "number") {
+                attempts.push(parsedAnswer.numeric);
+            }
+        } else if (parsedAnswer.kind === "decimal" && typeof parsedAnswer.numeric === "number") {
+            attempts.push(parsedAnswer.numeric);
+        }
+
+        const isCorrect = attempts.some((attempt) => question.checkAnswer(attempt));
+
         if (isCorrect) {
             setScore((prev) => prev + 1);
             generateNewQuestion();
             setIsCorrect(true);
             setTimeout(() => setIsCorrect(false), 150);
+            setInputError("");
         } else {
             setScore((prev) => Math.max(0, prev - 1));
             setIsWrong(true);
             setTimeout(() => setIsWrong(false), 150);
             setUserAnswer("");
+            setInputError("");
             inputRef.current?.focus();
         }
     };
@@ -78,11 +116,15 @@ const MainPage: React.FC = () => {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUserAnswer(e.target.value);
+        if (inputError) {
+            setInputError("");
+        }
     };
 
     const handleSkip = (e: React.MouseEvent | KeyboardEvent) => {
         e.preventDefault();
         generateNewQuestion();
+        setInputError("");
     };
 
     // Generate first question when component mounts
@@ -126,6 +168,7 @@ const MainPage: React.FC = () => {
                     score={score}
                     resetScore={resetScore}
                     generateNewQuestion={generateNewQuestion}
+                    inputError={inputError}
                 />
 
                 <div className="toggle-buttons">

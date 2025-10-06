@@ -18,12 +18,15 @@ interface QuestionContainerProps {
     handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleSkip: (e: React.MouseEvent | KeyboardEvent) => void;
     handleSubmit: (e: React.FormEvent) => void;
+    inputError?: string;
 }
 
 const QuestionContainer: React.FC<QuestionContainerProps> = ({ 
     question, userAnswer, isWrong, isCorrect, timedMode, 
-    timeRemaining, gameState, startGame, score, ...props 
+    timeRemaining, gameState, startGame, score, inputError, ...props 
 }) => {
+    const errorMessageId = inputError ? "answer-error" : undefined;
+
     const renderQuestion = () => (
         <>
             <h2 className={`question ${isWrong ? "wrong" : ""} ${isCorrect ? "correct" : ""}`}>
@@ -33,13 +36,19 @@ const QuestionContainer: React.FC<QuestionContainerProps> = ({
                 <input
                     ref={props.inputRef}
                     autoFocus
-                    type="number"
-                    step="0.001"
-                    inputMode="decimal"
+                    type="text"
+                    inputMode="text"
                     value={userAnswer}
                     onChange={props.handleInputChange}
-                    placeholder="Answer"
+                    placeholder="Answer (e.g., 3/8)"
+                    aria-invalid={Boolean(inputError)}
+                    aria-describedby={errorMessageId}
                 />
+                {inputError && (
+                    <div className="input-error" role="alert" id={errorMessageId}>
+                        {inputError}
+                    </div>
+                )}
                 <div className="action-buttons">
                     <button type="submit">Submit (enter)</button>
                     <button type="button" onClick={props.handleSkip}>

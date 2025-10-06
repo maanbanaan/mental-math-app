@@ -55,13 +55,13 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
                 </div> */}
 
                 <div className="setting-group">
-                    <label>Game Mode</label>
+                    <label htmlFor="game-mode">Game Mode</label>
                     <select
+                        id="game-mode"
                         value={settings.gameMode}
                         onChange={(e) =>
                             setSettings({
-                                gameMode: e.target
-                                    .value as Settings["gameMode"],
+                                gameMode: e.target.value as Settings["gameMode"],
                             })
                         }
                     >
@@ -72,8 +72,9 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
 
                 {settings.gameMode === "timed" && (
                     <div className="setting-group">
-                        <label>Time Limit (seconds)</label>
+                        <label htmlFor="time-limit">Time Limit (seconds)</label>
                         <input
+                            id="time-limit"
                             type="number"
                             value={settings.timeLimit}
                             onChange={(e) =>
@@ -86,6 +87,24 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
                         />
                     </div>
                 )}
+
+                <div className="setting-group checkbox-setting">
+                    <label className="checkbox-label">
+                        <input
+                            type="checkbox"
+                            checked={settings.requireReducedFractions}
+                            onChange={(e) =>
+                                setSettings({
+                                    requireReducedFractions: e.target.checked,
+                                })
+                            }
+                        />
+                        Require simplest fraction answers
+                    </label>
+                    <p className="setting-description">
+                        When enabled, fraction responses must be reduced to lowest terms (e.g., 3/2 instead of 6/4).
+                    </p>
+                </div>
                 </div>
             </div>
         </div>

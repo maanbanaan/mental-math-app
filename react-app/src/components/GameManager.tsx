@@ -16,6 +16,7 @@ interface GameManagerProps {
     score: number;
     generateNewQuestion: () => void;
     resetScore: () => void;
+    inputError: string;
 }
 
 const GameManager: React.FC<GameManagerProps> = ({ settings, resetScore, generateNewQuestion, ...props }) => {
