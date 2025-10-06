@@ -21,7 +21,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
                 <div className="settings-content">
                 <h2>Settings</h2>
 
-                <div className="setting-group">
+                {/* <div className="setting-group">
                     <label>Difficulty (not functional yet)</label>
                     <select
                         value={settings.difficulty}
@@ -36,9 +36,9 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
                         <option value="medium">Medium</option>
                         <option value="hard">Hard</option>
                     </select>
-                </div>
+                </div> */}
 
-                <div className="setting-group">
+                {/* <div className="setting-group">
                     <label>Answer Mode (not functional yet)</label>
                     <select
                         value={settings.answerMode}
@@ -52,7 +52,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
                         <option value="input">Input</option>
                         <option value="multiple-choice">Multiple Choice</option>
                     </select>
-                </div>
+                </div> */}
 
                 <div className="setting-group">
                     <label>Game Mode</label>
